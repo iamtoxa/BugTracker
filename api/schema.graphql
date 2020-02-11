@@ -1,0 +1,197 @@
+scalar Date
+scalar DateTime
+
+
+enum task_types {
+  bug
+  improvement
+  task
+}
+
+enum task_status {
+  open
+  inprog
+  done
+}
+
+enum task_priority {
+  high
+  medium
+  low
+}
+
+enum task_severity {
+  blocker
+  critical
+  major
+  minor
+  trivial
+}
+
+enum user_position {
+  tester
+  developer
+}
+
+
+
+
+input userCreate {
+  first_name: String!
+  last_name: String!
+  password: String!
+  login: String!
+  position: user_position!
+}
+
+input userChange {
+  first_name: String
+  last_name: String
+  position: user_position
+}
+
+input projectChange {
+  name: String
+  shortname: String
+}
+
+input ticketChange {
+  name: String
+  description: String
+  severity: task_severity
+  priority: task_priority
+}
+
+
+
+type Query_boolRes{
+  status: Boolean!
+  log: String
+}
+
+type tokenPair{
+  Access: String!
+  Refresh: String!
+  log: String
+}
+
+type User {
+  ID: ID!
+  login: String!
+  first_name: String
+  last_name: String
+  position: user_position
+}
+
+type Project{
+  ID: ID!
+  _developerID: ID!
+  name: String!
+  shortname: String!
+
+  developer: User
+
+  tickets: [Ticket]
+  developers: [User]
+}
+
+type Ticket{
+  ID: ID!
+  _projectID: ID!
+  _testerID: ID!
+  _developerID: ID
+  status: task_status
+  type: task_types
+  priority: task_priority
+  severity: task_severity
+  createat: DateTime!
+
+  name: String
+  description: String
+
+  tester: User
+  project: Project
+  developer: User
+
+  messages: [Message]
+}
+
+type Message{
+  ID: ID!
+  _ticketID:ID
+  _ownerID:ID!
+
+  content: String
+  createat: DateTime
+
+  ticket: Ticket
+  owner: User
+}
+
+
+type Query {
+  "Получить все проекты"
+  projects: [Project]
+  "Получить всех пользователей"
+  users: [User]
+  "Получить все тикеты"
+  tickets: [Ticket]
+
+  "Получить пользователя по ID"
+  user(id: Int!): User
+  "Получить проект по ID"
+  project(id: Int!): Project
+  "Получить тикет по ID"
+  ticket(id: Int!): Ticket
+
+  "Получить авторизационный токен"
+  getToken(login: String!, password: String!): tokenPair
+  "Проверить авторизационный токен на действительность"
+  checkToken(token: String!): Int
+}
+
+type Mutation{
+  "Инвалидировать все токены (выйти со всех устройств прямо сейчас)"
+  deleteTokens(login: String!, password: String!): Query_boolRes
+  "Инвалидировать определённый рефреш токен (выйти из аккаунта на другом утройстве после истечения авторизационного токена. В течении часа.)"
+  deleteToken(refresh: String!): Query_boolRes
+  "Обновить пару токенов"
+  updateToken(refresh: String!): tokenPair
+
+  "Изменить данные пользователя"
+  changeUserFields(token:String!, newdata: userChange): Query_boolRes
+  "Создать пользователя"
+  createUser(newdata: userCreate): Query_boolRes
+
+  "Создать проект"
+  addProject(token:String!, name: String!, shortname: String!): ID
+  "Изменить проект"
+  updateProject(token: String!, id: ID!, newdata: projectChange!): Query_boolRes
+  "Удалить проект"
+  deleteProject(token: String!, id: ID): Query_boolRes
+
+  
+  "Добавить разработчиков в проект"
+  ProjectAddDev(token: String!, projectID: ID!, ids: [ID!]!): [Query_boolRes!]
+  "Убрать разработчиков из проекта"
+  ProjectRemoveDev(token: String!, projectID: ID, ids: [ID!]!): [Query_boolRes!]
+
+  "Взять тикет"
+  takeTicket(token: String!, id: ID!): Query_boolRes
+  "Вернуть тикет"
+  releaseTicket(token: String!, id: ID!): Query_boolRes
+  "Выполнить тикет"
+  completeTicket(token: String!, id: ID!): Query_boolRes
+
+  "Создать тикет"
+  addTicket(token: String!, projectID: ID!, name: String!, description: String!, severity: task_severity!, priority: task_priority!, type: task_types): ID
+  "Изменить тикет"
+  updateTicket(token: String!, id: ID!, newdata: ticketChange!): Query_boolRes
+  "Удалить тикет"
+  deleteTicket(token: String!, id: ID): Query_boolRes
+
+  "Добавить сообщение в тикет"
+  addMessage(token: String!, ticketID: ID, content: String!): ID
+  "Удалить сообщение из тикета"
+  removeMessage(token: String!, id: ID): Query_boolRes
+}

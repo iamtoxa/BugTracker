@@ -1,0 +1,15 @@
+mixin navbar(JWT)
+  nav.main-nav
+    .wrapper
+      .actions
+        if JWT
+          button.btn.btn__blue(onclick="newissue()") Add issue
+          button.btn.btn__blue(onclick="newProject()") New project
+      .name(onclick="window.open('/','_self')")
+        | DashBoard
+      .profile
+        if JWT
+          span= JWT.login
+          img(src='/images/exit-outline.svg' alt='' onclick="unauth()")
+        else
+          button.btn.btn__blue(onclick="window.open('/auth','_self')") Login In

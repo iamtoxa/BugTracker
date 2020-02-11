@@ -1,0 +1,33 @@
+* {
+    scroll-behavior: smooth;
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+      background: transparent;
+    }
+    ::-webkit-scrollbar-button {
+      display: none;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    ::-webkit-scrollbar-track-piece {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 0 10px 10px 0;
+      background: #8f8f8f;
+      &:hover {
+        background: #575757;
+      }
+      &:end {
+        background: #000000;
+      }
+    }
+    ::-webkit-scrollbar-corner {
+      display: none;
+    }
+    ::-webkit-resizer {
+      display: none;
+    }
+  }

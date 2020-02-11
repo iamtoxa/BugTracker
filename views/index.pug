@@ -1,0 +1,47 @@
+include includes/head.pug
+include includes/navbar.pug
+
++head('/styles/style_index.css')
++navbar(JWT)
+
+main
+  .filter
+    div
+      select(name='project' id='' _onload='list_projects(this)')
+        option(value='' selected='' disabled='' hidden='') Project
+      select(name='priority' id='')
+        option(value='' selected='' disabled='' hidden='') Priority
+        option(value='high') High
+        option(value='medium') Medium
+        option(value='low') Low
+      select(name='severity' id='')
+        option(value='' selected='' disabled='' hidden='') Severity
+        option(value='blocker') Blocker
+        option(value='critical') Critical
+        option(value='major') Major
+        option(value='minor') Minor
+        option(value='trivial') Trivial
+    button(onclick="ShowTickets()") Filter
+  .tickets
+    .header
+      div#status
+        div.selected(name='open' onclick="ShowTickets('open');") Opened
+        div(name='inprog' onclick="ShowTickets('inprog');") In progress
+        div(name='done' onclick="ShowTickets('done');") Done
+    .results#results
+      template
+        .card
+          .body
+            h2.name
+            p.description
+          .info
+            span.priority
+            .group
+              span.severity
+              span.time
+            span.project
+
+script(script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+script(src="https://unpkg.com/apollo-client-browser")
+script(src='/js/main.js')
+script ShowTickets()

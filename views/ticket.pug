@@ -1,0 +1,61 @@
+include includes/head.pug
+include includes/navbar.pug
+
++head('/styles/style_ticket.css')
++navbar(JWT)
+
+main
+  .ticket
+    .main
+      h2= ticket.name
+      hr
+      p= ticket.description
+    case ticket.status
+      when "open"
+        .status.green Open
+      when "inprog"
+        .status.blue In progress
+      when "done"
+        .status.red Solved
+    .comments
+      h2 Comments
+      each message in ticket.messages
+        .message
+          p= message.content
+          .info
+            div.author= message.owner.login
+            div.createat= message.createat
+      .message_input
+        textarea(name="message_content")
+        button.btn__blue.btn-box(onclick=`sendMessage(${ticket.ID})` ) Send
+  .info
+    table(width="100%")
+      tr
+        td 
+          b Project:
+        td= ticket.project.name
+      tr
+        td
+          b Severity:
+        td= ticket.severity
+      tr
+        td
+          b Priority:
+        td= ticket.priority
+      tr
+        td
+          b Developer:
+        td= ticket.project.developer.login
+      tr
+        td
+          b Tester:
+        td= ticket.tester.login
+      tr
+        td
+          b Create At:
+        td= ticket.createat
+    
+
+script(script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+script(src="https://unpkg.com/apollo-client-browser")
+script(src='/js/main.js')

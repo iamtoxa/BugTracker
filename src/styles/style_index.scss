@@ -1,0 +1,171 @@
+.filter{
+    position: relative;
+    display: flex;
+    background: #C4C4C4;
+    width: 100%;
+    min-height: 70px;
+    height: auto;
+    border-radius: 5px;
+    overflow: hidden;
+
+    justify-content: space-between;
+    align-items: center;
+
+    button{
+        all: unset;
+        display: block;
+        background: #2F598A;
+        color: #ffffff;
+        padding: 0 20px;
+        font-size: 20pt;
+        font-weight: 100;
+        cursor: pointer;
+        transition: filter 0.2s ease;
+        align-self: stretch;
+        
+        &:hover{
+            filter: brightness(0.9);
+        }
+    }
+
+    div{
+        padding: 16px;
+        flex:1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        select{
+            flex:1;
+            margin-bottom: 3px;
+            margin-top: 3px;
+            margin-right: 16px;
+        }
+    }
+}
+
+.tickets{
+    display: flex;
+    flex-direction: column;
+    background: #C4C4C4;
+    width: 100%;
+    min-height: 280px;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .header{
+        flex: 0;
+        background: #616C79;
+        width: 100%;
+        min-height: 70px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div{
+            display: flex;
+            
+            border-radius: 120px;
+            overflow: hidden;
+            flex-wrap: wrap;
+            margin: 10px;
+            > div{
+                flex:1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-weight: 100;
+                font-size: 16pt;
+                min-width: 200px;
+                padding: 0.2em 1em;
+                background: #F4F4F4;
+                cursor: pointer;
+                &.selected{
+                    background: #2F598A;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
+    .results{
+        margin: 20px;
+    }
+
+    
+
+    .card{
+        &:not(:last-child){
+            margin-bottom: 20px;
+        }
+
+        background: #ffffff;
+        color: #000000;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 10px 10px 0 10px;
+        cursor: pointer;
+        .body{
+            min-height: 120px;
+
+            h2{
+                margin: 0;
+                padding: 0;
+                margin-bottom: 5px;
+            }
+            p{
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .info{
+            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            font-size: 14pt;
+            font-weight: 100;
+            .priority{
+                margin-right: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                text-transform: capitalize;
+            }
+            .group{
+                flex: 1;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+                background: #2F598A;
+                border-radius: 5px 5px 0 0;
+                color: #FFFFFF;
+                align-items: center;
+
+                .severity{
+                    text-transform: capitalize;
+                    @media screen and (max-width:640px) {
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+                .time{
+
+                    @media screen and (max-width:640px) {
+                        display: none;
+                    }
+                }
+            }
+            .project{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+                text-align: center;
+            }
+        }
+    }
+}

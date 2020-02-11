@@ -1,0 +1,83 @@
+.main-nav{
+    display: flex;
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    background: #252C37;
+    color: #ffffff;
+    justify-content: center;
+    z-index: 50;
+
+    >.wrapper{
+        height: 100%;
+        width: 100%;
+        max-width: 1140px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        >*{
+            flex: 1;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @media screen and (max-width:960px) {
+                flex: auto;
+            }
+        }
+
+        >.name{
+            font-size: 30pt;
+            font-family: 'Helvetica';
+            cursor: pointer;
+
+            @media screen and (max-width:960px) {
+                display: none;
+            }
+        }
+
+        .profile{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 18pt;
+            font-weight: 100;
+
+            span{
+                margin-right: 10px;
+                transform: translateY(-0.12rem);
+                text-align: right;
+            }
+
+            img{
+                @media screen and (max-width:640px) {
+                    height: 20px;
+                    
+                }
+
+                cursor: pointer;
+            }
+
+            @media screen and (max-width:640px) {
+                font-size: 14pt;
+            }
+        }
+
+        .actions{
+            justify-content: flex-start;
+            
+            >*{
+                margin-right: 10px;
+
+                @media screen and (max-width:640px) {
+                    font-size: 14pt;
+                }
+            }
+        }
+    }
+}
